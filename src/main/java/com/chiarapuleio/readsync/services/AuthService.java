@@ -39,9 +39,8 @@ public class AuthService {
             throw new BadRequestException("Email: " + user.email() + " already exist.");
         });
         User newUser = new User(user.username(), user.name(), user.lastName(), user.email(), bcrypt.encode(user.password()));
-//        newUser.setAvatar("https://ui-avatars.com/api/?name" + user.name() + user.lastName());
+        newUser.setAvatar("https://ui-avatars.com/api/?name=" + user.name() + user.lastName());
         newUser.setUserRole(UserRole.USER);
-        User savedUser = userDAO.save(newUser);
-        return savedUser;
+        return userDAO.save(newUser);
     }
 }

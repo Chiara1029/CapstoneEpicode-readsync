@@ -27,8 +27,9 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private UserRole userRole;
-    //avatar
+    private String avatar;
     //liste da aggiungere
 
 
@@ -38,7 +39,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.userRole = UserRole.USER;
     }
 
     @Override
