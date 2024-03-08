@@ -46,9 +46,4 @@ public class UserService {
         found.setAvatar(avatarURL);
         return userDAO.save(found);
     }
-
-    public List<User> getAll(){
-        return userDAO.findAll();
-    }
-
 }
