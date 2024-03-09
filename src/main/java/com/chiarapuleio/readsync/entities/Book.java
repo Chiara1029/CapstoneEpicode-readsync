@@ -1,10 +1,13 @@
 package com.chiarapuleio.readsync.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +25,9 @@ public class Book {
     private String plot;
     private String genre;
     private String cover;
-    //lista reviews
+    @OneToMany(mappedBy = "book")
+    @JsonIgnore
+    private List<Review> reviewList;
     //lista media
 
 

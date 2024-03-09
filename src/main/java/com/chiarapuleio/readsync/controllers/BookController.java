@@ -30,7 +30,7 @@ public class BookController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CONTINUE)
+    @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
     public Book saveBook(@RequestBody BookDTO newBook){
         return bookSrv.save(newBook);

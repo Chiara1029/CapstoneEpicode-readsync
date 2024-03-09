@@ -1,6 +1,7 @@
 package com.chiarapuleio.readsync.entities;
 
 import com.chiarapuleio.readsync.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +31,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
     private String avatar;
-    //liste da aggiungere
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Review> reviewList;
+    //lista userbook
 
 
     public User(String username, String name, String lastName, String email, String password) {
