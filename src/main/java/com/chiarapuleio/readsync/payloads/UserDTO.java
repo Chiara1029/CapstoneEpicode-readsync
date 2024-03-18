@@ -2,6 +2,7 @@ package com.chiarapuleio.readsync.payloads;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 public record UserDTO(
         @NotEmpty
@@ -12,6 +13,7 @@ public record UserDTO(
         String lastName,
         @NotEmpty
         @Email
+        @Pattern(regexp = ".+@.+\\..+", message = "Invalid Email")
         String email,
         @NotEmpty
         String password
