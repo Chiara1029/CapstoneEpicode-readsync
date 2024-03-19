@@ -34,7 +34,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Review> reviewList;
-    //lista userbook
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<UserBook> userBooks;
 
 
     public User(String username, String name, String lastName, String email, String password) {
