@@ -41,4 +41,13 @@ public class ReviewController {
             reviewDAO.delete(found);
         } else throw new NotFoundException(reviewId + " not found.");
     }
+
+    @GetMapping("{isbnCode}")
+    public Page<Review> getAllReviewsByIsbn(@PathVariable String isbnCode,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size,
+                                            @RequestParam(defaultValue = "id") String sort) {
+        return reviewSrv.getAllReviewsByIsbn(isbnCode, page, size, sort);
+    }
+
 }

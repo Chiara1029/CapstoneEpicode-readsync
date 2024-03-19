@@ -25,7 +25,7 @@ public class BookController {
     }
 
     @GetMapping("/{isbnCode}")
-    public Book getBookByIsbn(@RequestParam String isbnCode){
+    public Book getBookByIsbn(@PathVariable String isbnCode){
         return bookSrv.findByIsbnCode(isbnCode);
     }
 

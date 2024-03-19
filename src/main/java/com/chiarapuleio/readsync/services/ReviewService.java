@@ -28,6 +28,11 @@ public class ReviewService {
         return reviewDAO.findAll(pageable);
     }
 
+    public Page<Review> getAllReviewsByIsbn(String isbnCode, int page, int size, String sort) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+        return reviewDAO.findAllByBookIsbnCode(isbnCode, pageable);
+    }
+
     public Review save (ReviewDTO review){
         User user = userSrv.findById(review.userId());
         Book book = bookSrv.findByIsbnCode(review.bookIsbn());
