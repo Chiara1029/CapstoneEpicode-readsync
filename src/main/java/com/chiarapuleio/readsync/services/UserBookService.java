@@ -11,6 +11,7 @@ import com.chiarapuleio.readsync.repositories.BookDAO;
 import com.chiarapuleio.readsync.repositories.UserBookDAO;
 import com.chiarapuleio.readsync.repositories.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,23 +39,15 @@ public class UserBookService {
                 .orElseThrow(() -> new NotFoundException(userBook.isbnCode()));
         User user = userDAO.findById(userBook.userId())
                 .orElseThrow(() -> new NotFoundException(userBook.userId()));
-
-        BookStatus bookStatus;
-
-        if (userBook.startDate() != null && userBook.endDate() != null) {
-            bookStatus = BookStatus.READ;
-        } else if (userBook.startDate() != null && userBook.endDate() == null) {
-            bookStatus = BookStatus.CURRENTLY_READING;
-        } else if (userBook.startDate() == null && userBook.endDate() == null) {
-            bookStatus = BookStatus.TO_READ;
-        } else {
-            throw new BadRequestException("Invalid Input.");
+        BookStatus bookStatus = BookStatus.valueOf(userBook.bookStatus());
+        LocalDate startDate = userBook.startDate();
+        if (bookStatus == BookStatus.CURRENTLY_READING && startDate == null) {
+            startDate = LocalDate.now();
         }
-
-        UserBook newUserBook = new UserBook(user, book, userBook.startDate(), userBook.endDate(), bookStatus);
-
+        UserBook newUserBook = new UserBook(user, book, startDate, userBook.endDate(), bookStatus);
         return userBookDAO.save(newUserBook);
     }
+
 
 
     public void delete(Long id){

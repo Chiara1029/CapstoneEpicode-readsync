@@ -9,6 +9,7 @@ public record UserBookDTO (
         UUID userId,
         String isbnCode,
         LocalDate startDate,
-        LocalDate endDate
+        LocalDate endDate,
+        String bookStatus
 ){
 }

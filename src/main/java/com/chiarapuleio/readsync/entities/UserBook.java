@@ -16,12 +16,14 @@ import java.time.LocalDate;
 @Table(name = "user_books")
 public class UserBook {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Setter(AccessLevel.NONE)
     private Long id;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
     private LocalDate startDate;
     private LocalDate endDate;
