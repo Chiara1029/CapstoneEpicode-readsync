@@ -1,6 +1,8 @@
 package com.chiarapuleio.readsync.controllers;
 
+import com.chiarapuleio.readsync.entities.Review;
 import com.chiarapuleio.readsync.entities.User;
+import com.chiarapuleio.readsync.entities.UserBook;
 import com.chiarapuleio.readsync.exceptions.UnauthorizedException;
 import com.chiarapuleio.readsync.security.JWTTools;
 import com.chiarapuleio.readsync.services.AuthService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -48,5 +51,25 @@ public class UserController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/{userId}/reviews")
+    public List<Review> getUserReviews(@PathVariable UUID userId){
+        return userSrv.findReviewsByUserId(userId);
+    }
+
+    @GetMapping("/{userId}/read")
+    public List<UserBook> getUserReadBooks(@PathVariable UUID userId){
+        return userSrv.findReadBooksByUserId(userId);
+    }
+
+    @GetMapping("/{userId}/toRead")
+    public List<UserBook> getUserToReadBooks(@PathVariable UUID userId){
+        return userSrv.findToReadBooksByUserId(userId);
+    }
+
+    @GetMapping("/{userId}/currentlyReading")
+    public List<UserBook> getUserCurrentlyReadingBooks(@PathVariable UUID userId){
+        return userSrv.findCurrentlyReadingBooksByUserId(userId);
     }
 }

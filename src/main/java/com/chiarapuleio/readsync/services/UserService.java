@@ -1,6 +1,8 @@
 package com.chiarapuleio.readsync.services;
 
+import com.chiarapuleio.readsync.entities.Review;
 import com.chiarapuleio.readsync.entities.User;
+import com.chiarapuleio.readsync.entities.UserBook;
 import com.chiarapuleio.readsync.exceptions.BadRequestException;
 import com.chiarapuleio.readsync.exceptions.NotFoundException;
 import com.chiarapuleio.readsync.payloads.UserDTO;
@@ -45,5 +47,19 @@ public class UserService {
         String avatarURL = (String) cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
         found.setAvatar(avatarURL);
         return userDAO.save(found);
+    }
+
+    public List<Review> findReviewsByUserId(UUID userId){
+        return userDAO.findReviewsByUserId(userId);
+    }
+
+    public List<UserBook> findReadBooksByUserId(UUID userId){
+        return userDAO.findReadBooksByUserId(userId);
+    }
+    public List<UserBook> findToReadBooksByUserId(UUID userId){
+        return userDAO.findToReadBooksByUserId(userId);
+    }
+    public List<UserBook> findCurrentlyReadingBooksByUserId(UUID userId){
+        return userDAO.findCurrentlyReadingBooksByUserId(userId);
     }
 }
