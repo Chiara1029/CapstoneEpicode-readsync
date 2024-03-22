@@ -2,7 +2,9 @@ package com.chiarapuleio.readsync.entities;
 
 import com.chiarapuleio.readsync.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private UUID id;
     private String username;
     private String name;
@@ -32,10 +35,10 @@ public class User implements UserDetails {
     private UserRole userRole;
     private String avatar;
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+    @JsonIgnoreProperties({"user"})
     private List<Review> reviewList;
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+    @JsonIgnoreProperties({"user"})
     private List<UserBook> userBooks;
 
 
