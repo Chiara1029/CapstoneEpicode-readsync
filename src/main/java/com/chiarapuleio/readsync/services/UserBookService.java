@@ -48,10 +48,25 @@ public class UserBookService {
         return userBookDAO.save(newUserBook);
     }
 
-
-
     public void delete(Long id){
         UserBook userBook = userBookDAO.findById(id).orElseThrow(()-> new NotFoundException(String.valueOf(id)));
         userBookDAO.delete(userBook);
+    }
+
+    public UserBook findByIdAndUpdate(Long id, UserBookDTO updatedUserBook){
+        UserBook foundUserBook = userBookDAO.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.valueOf(id)));
+
+        Book book = bookDAO.findByIsbnCode(updatedUserBook.isbnCode())
+                .orElseThrow(() -> new NotFoundException(updatedUserBook.isbnCode()));
+        User user = userDAO.findById(updatedUserBook.userId())
+                .orElseThrow(() -> new NotFoundException(updatedUserBook.userId()));
+        foundUserBook.setBook(book);
+        foundUserBook.setUser(user);
+        foundUserBook.setStartDate(updatedUserBook.startDate());
+        foundUserBook.setEndDate(updatedUserBook.endDate());
+        foundUserBook.setBookStatus(BookStatus.valueOf(updatedUserBook.bookStatus()));
+
+        return userBookDAO.save(foundUserBook);
     }
 }

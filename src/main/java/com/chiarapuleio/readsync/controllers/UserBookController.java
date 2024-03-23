@@ -21,24 +21,32 @@ public class UserBookController {
     private UserBookDAO userBookDAO;
 
     @GetMapping
-    public Page<UserBook>getAllUserBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sort){
+    public Page<UserBook> getAllUserBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sort) {
         return userBookSrv.getAllUserBooks(page, size, sort);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('USER')")
-    public UserBook saveUserBook(@RequestBody UserBookDTO userBook){
+    public UserBook saveUserBook(@RequestBody UserBookDTO userBook) {
         return userBookSrv.saveUserBook(userBook);
     }
+
 
     @DeleteMapping("/{userBookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('USER')")
-    public void deleteUserBook(@PathVariable Long userBookId){
+    public void deleteUserBook(@PathVariable Long userBookId) {
         UserBook found = userBookDAO.findById(userBookId).orElseThrow(() -> new NotFoundException("Id " + userBookId + " not found."));
-        if(found!= null){
+        if (found != null && found.getUser().getReviewList().isEmpty()) {
             userBookDAO.delete(found);
         }
+    }
+
+    @PutMapping("/{userBookId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('USER')")
+    public UserBook findByIdAndUpdate(@PathVariable Long userBookId, @RequestBody UserBookDTO updatedUserBook){
+        return userBookSrv.findByIdAndUpdate(userBookId, updatedUserBook);
     }
 }
