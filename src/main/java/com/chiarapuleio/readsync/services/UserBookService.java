@@ -19,6 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class UserBookService {
@@ -55,12 +56,11 @@ public class UserBookService {
 
     public UserBook findByIdAndUpdate(Long id, UserBookDTO updatedUserBook){
         UserBook foundUserBook = userBookDAO.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.valueOf(id)));
-
+                .orElseThrow(() -> new NotFoundException("UserBook ID not found: " + id));
         Book book = bookDAO.findByIsbnCode(updatedUserBook.isbnCode())
-                .orElseThrow(() -> new NotFoundException(updatedUserBook.isbnCode()));
+                .orElseThrow(() -> new NotFoundException("Book not found: " + updatedUserBook.isbnCode()));
         User user = userDAO.findById(updatedUserBook.userId())
-                .orElseThrow(() -> new NotFoundException(updatedUserBook.userId()));
+                .orElseThrow(() -> new NotFoundException("User not found: " + updatedUserBook.userId()));
         foundUserBook.setBook(book);
         foundUserBook.setUser(user);
         foundUserBook.setStartDate(updatedUserBook.startDate());
