@@ -62,4 +62,8 @@ public class UserService {
     public List<UserBook> findCurrentlyReadingBooksByUserId(UUID userId){
         return userDAO.findCurrentlyReadingBooksByUserId(userId);
     }
+    public void delete(UUID userId){
+        User user = userDAO.findById(userId).orElseThrow(() -> new NotFoundException(userId));
+        userDAO.delete(user);
+    }
 }
