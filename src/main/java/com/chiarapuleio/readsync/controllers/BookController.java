@@ -45,4 +45,10 @@ public class BookController {
             bookDAO.delete(found);
         } else throw new NotFoundException(isbnCode + " not found.");
     }
+
+    @PutMapping("/{isbnCode}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Book findByIsbnAndUpdate(@PathVariable String isbnCode, @RequestBody BookDTO updatedBook){
+        return bookSrv.findByIsbnCodeAndUpdate(isbnCode, updatedBook);
+    }
 }

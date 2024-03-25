@@ -32,5 +32,17 @@ public class BookService {
         return bookDAO.findByIsbnCode(isbnCode).orElseThrow(() -> new NotFoundException(isbnCode + " not found."));
     }
 
+    public Book findByIsbnCodeAndUpdate(String isbnCode, BookDTO updatedBook){
+        Book foundBook = bookDAO.findByIsbnCode(isbnCode).orElseThrow(()-> new NotFoundException(isbnCode));
+
+        foundBook.setTitle(updatedBook.title());
+        foundBook.setAuthor(updatedBook.author());
+        foundBook.setIsbnCode(updatedBook.isbnCode());
+        foundBook.setPlot(updatedBook.plot());
+        foundBook.setGenre(updatedBook.genre());
+        foundBook.setCover(updatedBook.cover());
+
+        return bookDAO.save(foundBook);
+    }
 
 }

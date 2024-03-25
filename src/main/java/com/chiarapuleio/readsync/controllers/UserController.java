@@ -92,7 +92,6 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('USER')")
     public User findByIdAndUpdate(@PathVariable UUID userId, @RequestBody UserDTO updatedUser){
         return userSrv.findByIdAndUpdate(userId, updatedUser);

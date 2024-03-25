@@ -44,7 +44,6 @@ public class UserBookController {
     }
 
     @PutMapping("/{userBookId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAuthority('USER')")
     public UserBook findByIdAndUpdate(@PathVariable Long userBookId, @RequestBody UserBookDTO updatedUserBook){
         return userBookSrv.findByIdAndUpdate(userBookId, updatedUserBook);
