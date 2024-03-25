@@ -66,4 +66,14 @@ public class UserService {
         User user = userDAO.findById(userId).orElseThrow(() -> new NotFoundException(userId));
         userDAO.delete(user);
     }
+
+    public User findByIdAndUpdate(UUID userId, UserDTO updatedUser){
+        User found = userDAO.findById(userId).orElseThrow(()-> new NotFoundException(userId));
+        found.setName(updatedUser.name());
+        found.setLastName(updatedUser.lastName());
+        found.setEmail(updatedUser.email());
+        found.setUsername(updatedUser.username());
+
+        return userDAO.save(found);
+    }
 }

@@ -5,6 +5,7 @@ import com.chiarapuleio.readsync.entities.User;
 import com.chiarapuleio.readsync.entities.UserBook;
 import com.chiarapuleio.readsync.exceptions.NotFoundException;
 import com.chiarapuleio.readsync.exceptions.UnauthorizedException;
+import com.chiarapuleio.readsync.payloads.UserDTO;
 import com.chiarapuleio.readsync.repositories.UserDAO;
 import com.chiarapuleio.readsync.security.JWTTools;
 import com.chiarapuleio.readsync.services.AuthService;
@@ -88,6 +89,13 @@ public class UserController {
         if(found != null){
             userSrv.delete(userId);
         }
+    }
+
+    @PutMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('USER')")
+    public User findByIdAndUpdate(@PathVariable UUID userId, @RequestBody UserDTO updatedUser){
+        return userSrv.findByIdAndUpdate(userId, updatedUser);
     }
 
 }
