@@ -35,6 +35,10 @@ public class UserBookService {
         return userBookDAO.findAll(pageable);
     }
 
+    public List<UserBook> getAllBooks(){
+        return userBookDAO.findAll();
+    }
+
     public UserBook saveUserBook(UserBookDTO userBook) {
         Book book = bookDAO.findByIsbnCode(userBook.isbnCode())
                 .orElseThrow(() -> new NotFoundException(userBook.isbnCode()));

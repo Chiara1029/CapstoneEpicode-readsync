@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/userBooks")
 public class UserBookController {
@@ -23,6 +25,12 @@ public class UserBookController {
     @GetMapping
     public Page<UserBook> getAllUserBooks(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "id") String sort) {
         return userBookSrv.getAllUserBooks(page, size, sort);
+    }
+
+    @GetMapping("/getAll")
+    @PreAuthorize("hasAuthority('USER')")
+    public List<UserBook> getAllBooks(){
+        return userBookSrv.getAllBooks();
     }
 
     @PostMapping
@@ -38,7 +46,7 @@ public class UserBookController {
     @PreAuthorize("hasAuthority('USER')")
     public void deleteUserBook(@PathVariable Long userBookId) {
         UserBook found = userBookDAO.findById(userBookId).orElseThrow(() -> new NotFoundException("Id " + userBookId + " not found."));
-        if (found != null && found.getUser().getReviewList().isEmpty()) {
+        if (found != null) {
             userBookDAO.delete(found);
         }
     }

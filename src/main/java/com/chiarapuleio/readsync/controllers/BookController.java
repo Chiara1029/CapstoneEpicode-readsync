@@ -41,7 +41,7 @@ public class BookController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public void removeBook(@PathVariable String isbnCode){
         Book found = bookSrv.findByIsbnCode(isbnCode);
-        if(found != null){
+        if(found != null && found.getReviewList().isEmpty()){
             bookDAO.delete(found);
         } else throw new NotFoundException(isbnCode + " not found.");
     }
