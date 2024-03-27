@@ -28,12 +28,6 @@ public class UserService {
         return userDAO.findAll();
     }
 
-    public User save(UserDTO user){
-        if(userDAO.existsByEmail(user.email())) throw new BadRequestException("This email already exist.");
-        User newUser = new User(user.username(), user.name(), user.lastName(), user.email(), user.password());
-        return userDAO.save(newUser);
-    }
-
     public User findById(UUID id){
         return userDAO.findById(id).orElseThrow(() -> new NotFoundException(id + " not found."));
     }

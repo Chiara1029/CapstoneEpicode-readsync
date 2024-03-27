@@ -1,6 +1,7 @@
 package com.chiarapuleio.readsync.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,9 +28,11 @@ public class Book {
     private String genre;
     private String cover;
     @OneToMany(mappedBy = "book")
-    @JsonIgnore
+    @JsonIgnoreProperties({"book", "user"})
     private List<Review> reviewList;
-    //lista media
+    @OneToMany(mappedBy = "book")
+    @JsonIgnoreProperties({"book", "user"})
+    private List<MediaItem> mediaItemList;
 
 
     public Book(String title, String author, String isbnCode, String plot, String genre, String cover) {
