@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BookService {
     @Autowired
@@ -20,6 +22,9 @@ public class BookService {
     public Page<Book> getAllBooks(int page, int size, String orderBy){
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return bookDAO.findAll(pageable);
+    }
+    public List<Book> getBooks(){
+        return bookDAO.findAll();
     }
 
     public Book save(BookDTO book){
