@@ -23,7 +23,7 @@ public class Book {
     private String title;
     private String author;
     private String isbnCode;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String plot;
     private String genre;
     private String cover;

@@ -21,6 +21,7 @@ public abstract class MediaItem {
     private Long id;
     private String title;
     private int year;
+    @Column(columnDefinition = "TEXT")
     private String plot;
     private String poster;
     private String genre;

@@ -17,6 +17,7 @@ public class Review {
     @Setter(AccessLevel.NONE)
     private Long id;
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String body;
     @ManyToOne
     @JoinColumn(name = "book_id")
